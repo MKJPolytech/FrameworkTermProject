@@ -14,21 +14,21 @@
             "개는 우리의 충실한 동반자입니다.",
             "개는 항상 우리를 기쁘게 만듭니다."
         ];
-    
-        // 랜덤 출력 펑션
+
+        // 랜덤 출력 함수
         function displayRandomQuote() {
             var randomIndex = Math.floor(Math.random() * dogQuotes.length);
             document.getElementById('quote-text').textContent = dogQuotes[randomIndex];
         }
-    
-        // 페이지가 로드하면 펑션 활성화
+
+        // 페이지가 로드하면 함수 활성화
         window.onload = function() {
             displayRandomQuote();
         };
     </script>
-    
+
     <style>
-        
+
         body {
             background-image: url('/images/cropped_image.jpg');
             background-repeat: no-repeat;
@@ -81,6 +81,58 @@
             padding: 1em;
             color: red;
         }
+
+        /* 메인 컨텐츠 카드 */
+        .content-card {
+            max-width: 800px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .content-card h2 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .content-card p {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        /* 명언 박스 */
+        #quote-container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: rgba(173, 255, 47, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        #quote-container h3 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #fff;
+        }
+
+        #quote-text {
+            color: #333;
+            font-size: 20px;
+            font-style: italic;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
         footer {
             color: white;
             text-align: center;
@@ -88,16 +140,21 @@
             position: fixed;
             width: 100%;
             bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
         }
+
         @media (max-width: 600px) {
             body {
                 background-size: 100%;
             }
             header {
-                width: 90%; 
-                height: 1em; 
-                padding: 20px; 
-                top: 2%; 
+                width: 90%;
+                height: 1em;
+                padding: 20px;
+                top: 2%;
+            }
+            nav {
+                margin-top: 200px;
             }
             nav ul li {
                 float: none;
@@ -106,6 +163,28 @@
             nav ul li a {
                 text-align: left;
                 padding: 3em;
+            }
+
+            .content-card {
+                margin: 30px 10px;
+                padding: 20px;
+            }
+
+            .content-card h2 {
+                font-size: 22px;
+            }
+
+            #quote-container {
+                margin: 20px 10px;
+                padding: 20px;
+            }
+
+            #quote-container h3 {
+                font-size: 20px;
+            }
+
+            #quote-text {
+                font-size: 16px;
             }
         }
     </style>
@@ -116,35 +195,43 @@
     <a sec:authorize="!isAuthenticated()" th:href="@{/login}">로그인</a>
 
     <!-- 로그인 한 상태 -->
-<form sec:authorize="isAuthenticated()"
-      th:action="@{/logout}" method="post" style="display:inline;">
-    <span sec:authentication="principal.username">user</span>
-    <button type="submit">로그아웃</button>
-</form>
+    <form sec:authorize="isAuthenticated()"
+          th:action="@{/logout}" method="post" style="display:inline;">
+        <span sec:authentication="principal.username">user</span>
+        <button type="submit">로그아웃</button>
+    </form>
 </div>
-    <header id="container">
-        <h1>버디의 홈페이지</h1>
-    </header>
-    <nav>
-        <ul>
-            <li><a th:href="@{/home}">홈</a></li>
-            <li><a th:href="@{/photos}">사진</a></li>
-            <li><a th:href="@{/videos}">동영상</a></li>
-            <li><a th:href="@{/info}">정보</a></li>
-        </ul>
-    </nav>
-    <main>
-        <h2>버디의 홈페이지</h2>
-        <p>이곳은 저희 집의 사랑스러운 강아지인 버디의 홈페이지 입니다.</p>
-        <p id="current-date"></p>
-    
-        <div id="quote-container">
-            <h3>오늘의 명언</h3>
-            <p id="quote-text"></p>
-        </div>
-    </main>
-    <footer>
-        <p>&copy; 2024 My Homepage. All rights reserved.</p>
-    </footer>
+<header id="container">
+    <h1>버디의 홈페이지</h1>
+</header>
+<nav>
+    <ul>
+        <li><a th:href="@{/home}">홈</a></li>
+        <li><a th:href="@{/photos}">사진</a></li>
+        <li><a th:href="@{/videos}">동영상</a></li>
+        <li><a th:href="@{/info}">정보</a></li>
+    </ul>
+</nav>
+<main style="color: transparent;">
+    <!-- 빨간 글씨 숨김 처리 -->
+    <h2>버디의 홈페이지</h2>
+    <p>이곳은 저희 집의 사랑스러운 강아지인 버디의 홈페이지 입니다.</p>
+    <p id="current-date"></p>
+</main>
+
+<div class="content-card">
+    <h2>🐕 버디의 홈페이지에 오신 걸 환영합니다!</h2>
+    <p>이곳은 저희 집의 사랑스러운 강아지인 버디의 홈페이지입니다.</p>
+    <p>버디와 함께한 행복한 순간들을 공유합니다.</p>
+</div>
+
+<div id="quote-container">
+    <h3>💭 오늘의 명언</h3>
+    <p id="quote-text"></p>
+</div>
+
+<footer>
+    <p>&copy; 2024 My Homepage. All rights reserved.</p>
+</footer>
 </body>
 </html>

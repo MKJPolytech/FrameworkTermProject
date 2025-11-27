@@ -7,65 +7,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>버디의 야외 사진</title>
     <script>
-      // 키보드로 사진 둘러보기
+        // 키보드로 사진 둘러보기
 
-// 라이트박스 키보드로 
-function initializeLightboxKeyboardNavigation() {
-    const lightboxes = document.querySelectorAll('.lightbox');
+        // 라이트박스 키보드로
+        function initializeLightboxKeyboardNavigation() {
+            const lightboxes = document.querySelectorAll('.lightbox');
 
-    // 키보드 눌렀을때
-    function handleKeyPress(event) {
-        // 현재 보이는 라이트박스
-        const currentLightbox = document.querySelector('.lightbox:target');
+            // 키보드 눌렀을때
+            function handleKeyPress(event) {
+                // 현재 보이는 라이트박스
+                const currentLightbox = document.querySelector('.lightbox:target');
 
-        if (!currentLightbox) return; // 라이트박스 없을 시 exit
+                if (!currentLightbox) return; // 라이트박스 없을 시 exit
 
-        // 화살표 누를시
-        switch (event.key) {
-            case 'ArrowLeft':
-                navigateLightbox(currentLightbox, 'previous');
-                break;
-            case 'ArrowRight':
-                navigateLightbox(currentLightbox, 'next');
-                break;
-            case 'Escape':
-                currentLightbox.style.display = 'none'; // Esc 누르면 라이트박스 닫음
-                break;
-            default:
-                return; // 다른 키 누를 시 exit
+                // 화살표 누를시
+                switch (event.key) {
+                    case 'ArrowLeft':
+                        navigateLightbox(currentLightbox, 'previous');
+                        break;
+                    case 'ArrowRight':
+                        navigateLightbox(currentLightbox, 'next');
+                        break;
+                    case 'Escape':
+                        currentLightbox.style.display = 'none'; // Esc 누르면 라이트박스 닫힘
+                        break;
+                    default:
+                        return; // 다른 키 누를 시 exit
+                }
+            }
+
+            // 라이트박스 이미지 전환
+            function navigateLightbox(currentLightbox, direction) {
+                const lightboxId = currentLightbox.id;
+                const lightboxIndex = parseInt(lightboxId.match(/\d+/)[0]); // 인덱스 추출
+                let newIndex;
+
+                if (direction === 'next') {
+                    newIndex = lightboxIndex % lightboxes.length + 1; // 다음 이미지 인덱스
+                } else if (direction === 'previous') {
+                    newIndex = lightboxIndex === 1 ? lightboxes.length : lightboxIndex - 1; // 이전 이미지 인덱스
+                }
+
+                // 현재 라이트박스 닫힘
+                currentLightbox.style.display = 'none';
+
+                // 업데이트된 인덱스로 새로운 라이트박스 열기
+                const newLightboxId = `lightbox${newIndex}`;
+                const newLightbox = document.getElementById(newLightboxId);
+                newLightbox.style.display = 'flex';
+
+                // URL 갱신
+                history.replaceState(null, null, `#${newLightboxId}`);
+            }
+
+            // 키보드 이벤트 처리 함수
+            document.addEventListener('keydown', handleKeyPress);
         }
-    }
 
-    // 라이트박스 이미지 전환
-    function navigateLightbox(currentLightbox, direction) {
-        const lightboxId = currentLightbox.id;
-        const lightboxIndex = parseInt(lightboxId.match(/\d+/)[0]); // 인덱스 추출
-        let newIndex;
-
-        if (direction === 'next') {
-            newIndex = lightboxIndex % lightboxes.length + 1; // 다음 이미지 인덱스
-        } else if (direction === 'previous') {
-            newIndex = lightboxIndex === 1 ? lightboxes.length : lightboxIndex - 1; // 이전 이미지 인덱스
-        }
-
-        // 현재 라이트박스 닫음
-        currentLightbox.style.display = 'none';
-
-        // 업데이트된 인덱스로 새로운 라이트박스 열기
-        const newLightboxId = `lightbox${newIndex}`;
-        const newLightbox = document.getElementById(newLightboxId);
-        newLightbox.style.display = 'flex';
-
-        // URL 갱신
-        history.replaceState(null, null, `#${newLightboxId}`);
-    }
-
-    // 키보드 이벤트 처리 함수
-    document.addEventListener('keydown', handleKeyPress);
-}
-
-// 페이지 시작 때 위 함수 로드
-window.addEventListener('load', initializeLightboxKeyboardNavigation);
+        // 페이지 시작 때 위 함수 로드
+        window.addEventListener('load', initializeLightboxKeyboardNavigation);
     </script>
     <style>
         body {
@@ -117,15 +117,15 @@ window.addEventListener('load', initializeLightboxKeyboardNavigation);
             color: red;
         }
         #mediacontainer {
-            width: 90%; 
-            min-height: 500px; 
+            width: 90%;
+            min-height: 500px;
             background: rgb(236, 230, 230);
-            margin: 50px auto; 
+            margin: 50px auto;
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-wrap: wrap;
-            gap: 20px; 
+            gap: 20px;
             justify-content: center;
         }
         #mediacontainer img {
@@ -133,7 +133,7 @@ window.addEventListener('load', initializeLightboxKeyboardNavigation);
             height: auto;
             display: block;
             cursor: pointer;
-            margin: 10px; 
+            margin: 10px;
         }
         .lightbox {
             display: none;
@@ -154,6 +154,127 @@ window.addEventListener('load', initializeLightboxKeyboardNavigation);
         .lightbox:target {
             display: flex;
         }
+
+        /* 댓글 섹션 스타일 */
+        #comments {
+            max-width: 800px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        #comments h3 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid greenyellow;
+        }
+
+        #comments > div p, #comments form, #comments ul {
+            color: #333;
+        }
+
+        #comments > div {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #comments > div a {
+            color: #007bff;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        #comments > div a:hover {
+            text-decoration: underline;
+        }
+
+        #comments textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            resize: vertical;
+            min-height: 100px;
+            box-sizing: border-box;
+        }
+
+        #comments textarea:focus {
+            outline: none;
+            border-color: greenyellow;
+        }
+
+        #comments form button[type="submit"] {
+            background: greenyellow;
+            color: #333;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        #comments form button[type="submit"]:hover {
+            background: #adff2f;
+        }
+
+        #comments ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #comments ul li {
+            background: #f8f9fa;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border-left: 4px solid greenyellow;
+        }
+
+        #comments ul li strong {
+            color: #333;
+            font-size: 16px;
+        }
+
+        #comments ul li span {
+            color: #666;
+            font-size: 12px;
+        }
+
+        #comments ul li p {
+            color: #333;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+
+        #comments ul li form button {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        #comments ul li form button:hover {
+            background: #c82333;
+        }
+
         footer {
             color: white;
             text-align: center;
@@ -167,10 +288,10 @@ window.addEventListener('load', initializeLightboxKeyboardNavigation);
                 background-size: 100%;
             }
             header {
-                width: 90%; 
-                height: 1em; 
-                padding: 20px; 
-                top: 2%; 
+                width: 90%;
+                height: 1em;
+                padding: 20px;
+                top: 2%;
             }
             nav ul li {
                 float: none;
@@ -179,6 +300,19 @@ window.addEventListener('load', initializeLightboxKeyboardNavigation);
             nav ul li a {
                 text-align: left;
                 padding: 3em;
+            }
+
+            #comments {
+                margin: 30px 10px;
+                padding: 20px;
+            }
+
+            #comments h3 {
+                font-size: 20px;
+            }
+
+            #comments textarea {
+                min-height: 80px;
             }
         }
     </style>
@@ -189,87 +323,87 @@ window.addEventListener('load', initializeLightboxKeyboardNavigation);
     <a sec:authorize="!isAuthenticated()" th:href="@{/login}">로그인</a>
 
     <!-- 로그인 한 상태 -->
-<form sec:authorize="isAuthenticated()"
-      th:action="@{/logout}" method="post" style="display:inline;">
-    <span sec:authentication="principal.username">user</span>
-    <button type="submit">로그아웃</button>
-</form>
+    <form sec:authorize="isAuthenticated()"
+          th:action="@{/logout}" method="post" style="display:inline;">
+        <span sec:authentication="principal.username">user</span>
+        <button type="submit">로그아웃</button>
+    </form>
 </div>
-    <header id="container">
-        <h1>버디의 야외 사진</h1>
-    </header>
-    <nav>
-        <ul>
-            <li><a th:href="@{/home}">홈</a></li>
-<li><a th:href="@{/photos}">사진</a></li>
-<li><a th:href="@{/videos}">동영상</a></li>
-<li><a th:href="@{/info}">정보</a></li>
-        </ul>
-    </nav>
-    <main>
-        <h2>버디의 야외 사진</h2>
-        <p>버디랑 찍은 사랑스러운 야외 사진들을 마음껏 보세요.</p>
-    </main>
-    <div id="mediacontainer">
-        <!-- 실외 사진 여기다가 -->
-        <a href="#lightbox1"><img th:src="@{/images/1715752137597.jpg}" alt="버디 야외 사진 1"></a>
-        <a href="#lightbox3"><img th:src="@{/images/1715752163606.jpg}" alt="버디 야외 사진 3"></a>
-        <a href="#lightbox4"><img th:src="@{/images/1715754081614.jpg}" alt="버디 야외 사진 4"></a>
-        <a href="#lightbox5"><img th:src="@{/images/1715754089381.jpg}" alt="버디 야외 사진 5"></a>
-        <a href="#lightbox6"><img th:src="@{/images/1715754094598.jpg}" alt="버디 야외 사진 6"></a>
+<header id="container">
+    <h1>버디의 야외 사진</h1>
+</header>
+<nav>
+    <ul>
+        <li><a th:href="@{/home}">홈</a></li>
+        <li><a th:href="@{/photos}">사진</a></li>
+        <li><a th:href="@{/videos}">동영상</a></li>
+        <li><a th:href="@{/info}">정보</a></li>
+    </ul>
+</nav>
+<main>
+    <h2>버디의 야외 사진</h2>
+    <p>버디랑 찍은 사랑스러운 야외 사진들을 마음껏 보세요.</p>
+</main>
+<div id="mediacontainer">
+    <!-- 실외 사진 여기다가 -->
+    <a href="#lightbox1"><img th:src="@{/images/1715752137597.jpg}" alt="버디 야외 사진 1"></a>
+    <a href="#lightbox3"><img th:src="@{/images/1715752163606.jpg}" alt="버디 야외 사진 3"></a>
+    <a href="#lightbox4"><img th:src="@{/images/1715754081614.jpg}" alt="버디 야외 사진 4"></a>
+    <a href="#lightbox5"><img th:src="@{/images/1715754089381.jpg}" alt="버디 야외 사진 5"></a>
+    <a href="#lightbox6"><img th:src="@{/images/1715754094598.jpg}" alt="버디 야외 사진 6"></a>
 
-        <div id="lightbox1" class="lightbox">
-            <img th:src="@{/images/1715752137597.jpg}" alt="버디 야외 사진 1">
-        </div>
-        <div id="lightbox3" class="lightbox">
-            <img th:src="@{/images/1715752163606.jpg}" alt="버디 야외 사진 3">
-        </div>
-        <div id="lightbox4" class="lightbox">
-            <img th:src="@{/images/1715754081614.jpg}" alt="버디 야외 사진 4">
-        </div>
-        <div id="lightbox5" class="lightbox">
-            <img th:src="@{/images/1715754089381.jpg}" alt="버디 야외 사진 5">
-        </div>
-        <div id="lightbox6" class="lightbox">
-            <img th:src="@{/images/1715754094598.jpg}" alt="버디 야외 사진 6">
-        </div>
+    <div id="lightbox1" class="lightbox">
+        <img th:src="@{/images/1715752137597.jpg}" alt="버디 야외 사진 1">
     </div>
-    <section id="comments">
-        <h3>댓글</h3>
+    <div id="lightbox3" class="lightbox">
+        <img th:src="@{/images/1715752163606.jpg}" alt="버디 야외 사진 3">
+    </div>
+    <div id="lightbox4" class="lightbox">
+        <img th:src="@{/images/1715754081614.jpg}" alt="버디 야외 사진 4">
+    </div>
+    <div id="lightbox5" class="lightbox">
+        <img th:src="@{/images/1715754089381.jpg}" alt="버디 야외 사진 5">
+    </div>
+    <div id="lightbox6" class="lightbox">
+        <img th:src="@{/images/1715754094598.jpg}" alt="버디 야외 사진 6">
+    </div>
+</div>
+<section id="comments">
+    <h3>💬 댓글</h3>
 
-        <!-- 로그인 안 한 상태 -->
-        <div sec:authorize="!isAuthenticated()">
-            <p>댓글을 쓰려면 <a th:href="@{/login}">로그인</a> 해야 합니다.</p>
-        </div>
+    <!-- 로그인 안 한 상태 -->
+    <div sec:authorize="!isAuthenticated()">
+        <p>댓글을 쓰려면 <a th:href="@{/login}">로그인</a> 해야 합니다.</p>
+    </div>
 
-        <!-- 로그인 한 상태일 때만 작성 가능 -->
-        <form sec:authorize="isAuthenticated()"
-              th:action="@{/comments}" method="post">
-            <!-- 현재 페이지 구분 -->
-            <input type="hidden" name="pageId" th:value="${pageId}">
-            <textarea name="content" rows="3" required></textarea>
-            <button type="submit">댓글 작성</button>
-        </form>
+    <!-- 로그인 한 상태일 때만 작성 가능 -->
+    <form sec:authorize="isAuthenticated()"
+          th:action="@{/comments}" method="post">
+        <!-- 현재 페이지 구분 -->
+        <input type="hidden" name="pageId" th:value="${pageId}">
+        <textarea name="content" rows="3" required placeholder="댓글을 입력하세요..."></textarea>
+        <button type="submit">댓글 작성</button>
+    </form>
 
-        <ul>
-            <li th:each="comment : ${comments}">
-                <strong th:text="${comment.author.name}">작성자</strong>
-                <span th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
-                <p th:text="${comment.content}"></p>
+    <ul>
+        <li th:each="comment : ${comments}">
+            <strong th:text="${comment.author.name}">작성자</strong>
+            <span th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+            <p th:text="${comment.content}"></p>
 
-                <!-- 작성자 본인 또는 관리자만 삭제 버튼 보임 -->
-                <form sec:authorize="isAuthenticated() and (authentication.principal.username == ${comment.author.email} or hasRole('ADMIN'))"
-                      th:action="@{'/comments/' + ${comment.id} + '/delete'}"
-                      method="post">
-                    <input type="hidden" name="pageId" th:value="${pageId}">
-                    <button type="submit">삭제</button>
-                </form>
-            </li>
-        </ul>
-    </section>
+            <!-- 작성자 본인 또는 관리자만 삭제 버튼 보임 -->
+            <form sec:authorize="isAuthenticated() and (authentication.principal.username == ${comment.author.email} or hasRole('ADMIN'))"
+                  th:action="@{'/comments/' + ${comment.id} + '/delete'}"
+                  method="post">
+                <input type="hidden" name="pageId" th:value="${pageId}">
+                <button type="submit">삭제</button>
+            </form>
+        </li>
+    </ul>
+</section>
 
-    <footer>
-        <p>&copy; 2024 My Homepage. All rights reserved.</p>
-    </footer>
+<footer>
+    <p>&copy; 2024 My Homepage. All rights reserved.</p>
+</footer>
 </body>
 </html>

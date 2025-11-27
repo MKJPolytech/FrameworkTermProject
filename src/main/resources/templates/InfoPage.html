@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>버디에 대하여</title>
-    
+
     <style>
         body {
             background-image: url('/images/cropped_image.jpg');
@@ -61,7 +61,7 @@
             color: red;
         }
         #info-box {
-            background-color: beige;
+            background-color: rgba(245, 245, 220, 0.95);
             padding: 20px;
             margin: 50px auto;
             width: 80%;
@@ -78,6 +78,127 @@
             line-height: 1.6;
             font-size: 1.2em;
         }
+
+        /* 댓글 섹션 스타일 */
+        #comments {
+            max-width: 800px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        #comments h3 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid greenyellow;
+        }
+
+        #comments > div p, #comments form, #comments ul {
+            color: #333;
+        }
+
+        #comments > div {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #comments > div a {
+            color: #007bff;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        #comments > div a:hover {
+            text-decoration: underline;
+        }
+
+        #comments textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            resize: vertical;
+            min-height: 100px;
+            box-sizing: border-box;
+        }
+
+        #comments textarea:focus {
+            outline: none;
+            border-color: greenyellow;
+        }
+
+        #comments form button[type="submit"] {
+            background: greenyellow;
+            color: #333;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        #comments form button[type="submit"]:hover {
+            background: #adff2f;
+        }
+
+        #comments ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #comments ul li {
+            background: #f8f9fa;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border-left: 4px solid greenyellow;
+        }
+
+        #comments ul li strong {
+            color: #333;
+            font-size: 16px;
+        }
+
+        #comments ul li span {
+            color: #666;
+            font-size: 12px;
+        }
+
+        #comments ul li p {
+            color: #333;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+
+        #comments ul li form button {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        #comments ul li form button:hover {
+            background: #c82333;
+        }
+
         footer {
             color: white;
             text-align: center;
@@ -94,10 +215,10 @@
                 margin-top: 150px;
             }
             header {
-                width: 90%; 
-                height: 1em; 
-                padding: 20px; 
-                top: 2%; 
+                width: 90%;
+                height: 1em;
+                padding: 20px;
+                top: 2%;
             }
             nav ul li {
                 float: none;
@@ -106,70 +227,94 @@
             nav ul li a {
                 text-align: left;
                 padding: 10px;
-                font-size: 1em; 
+                font-size: 1em;
+            }
+
+            #comments {
+                margin: 30px 10px;
+                padding: 20px;
+            }
+
+            #comments h3 {
+                font-size: 20px;
+            }
+
+            #comments textarea {
+                min-height: 80px;
             }
         }
     </style>
 </head>
 <body>
-    <header id="container">
-        <h1>버디에 대하여</h1>
-    </header>
-    <nav>
-        <ul>
-            <li><a th:href="@{/home}">홈</a></li>
-            <li><a th:href="@{/photos}">사진</a></li>
-            <li><a th:href="@{/videos}">동영상</a></li>
-            <li><a th:href="@{/info}">정보</a></li>
-        </ul>
-    </nav>
-    <div id="info-box">
-        <h2>버디에 대하여</h2>
-        <p>이름: 버디</p>
-        <p>생일: 7월 13일</p>
-        <p>종: 골든 리트리버</p>
-        <p>버디는 간식과 산책을 좋아하는 강아지 입니다. 우리 집에는 2020년 9월 경에 왔습니다. 처음에 30cm 정도의 길이였던 녀석이 엄청 컸네요.</p>
+<div class="login-area" style="position:absolute; right:20px; top:10px;">
+    <!-- 로그인 안 한 상태 -->
+    <a sec:authorize="!isAuthenticated()" th:href="@{/login}">로그인</a>
+
+    <!-- 로그인 한 상태 -->
+    <form sec:authorize="isAuthenticated()"
+          th:action="@{/logout}" method="post" style="display:inline;">
+        <span sec:authentication="principal.username">user</span>
+        <button type="submit">로그아웃</button>
+    </form>
+</div>
+<header id="container">
+    <h1>버디에 대하여</h1>
+</header>
+<nav>
+    <ul>
+        <li><a th:href="@{/home}">홈</a></li>
+        <li><a th:href="@{/photos}">사진</a></li>
+        <li><a th:href="@{/videos}">동영상</a></li>
+        <li><a th:href="@{/info}">정보</a></li>
+    </ul>
+</nav>
+<div id="info-box">
+    <h2>버디에 대하여</h2>
+    <p>이름: 버디</p>
+    <p>생일: 7월 13일</p>
+    <p>종: 골든 리트리버</p>
+    <p>버디는 간식과 산책을 좋아하는 강아지 입니다. 우리 집에는 2020년 9월 경에 왔습니다. 처음에 30cm 정도의 길이였던 녀석이 엄청 컸네요.</p>
+</div>
+<section id="comments">
+    <h3>💬 댓글</h3>
+
+    <!-- 로그인 안 한 상태 -->
+    <div sec:authorize="!isAuthenticated()">
+        <p>댓글을 쓰려면 <a th:href="@{/login}">로그인</a> 해야 합니다.</p>
     </div>
-    <section id="comments">
-        <h3>댓글</h3>
 
-        <!-- 로그인 안 한 상태 -->
-        <div sec:authorize="!isAuthenticated()">
-            <p>댓글을 쓰려면 <a th:href="@{/login}">로그인</a> 해야 합니다.</p>
-        </div>
+    <!-- 로그인 한 상태일 때만 작성 가능 -->
+    <form sec:authorize="isAuthenticated()"
+          th:action="@{/comments}" method="post">
+        <!-- 현재 페이지 구분 -->
+        <input type="hidden" name="pageId" th:value="${pageId}">
+        <textarea name="content" rows="3" required placeholder="댓글을 입력하세요..."></textarea>
+        <button type="submit">댓글 작성</button>
+    </form>
 
-        <!-- 로그인 한 상태일 때만 작성 가능 -->
-        <form sec:authorize="isAuthenticated()"
-              th:action="@{/comments}" method="post">
-            <!-- 현재 페이지 구분 -->
-            <input type="hidden" name="pageId" th:value="${pageId}">
-            <textarea name="content" rows="3" required></textarea>
-            <button type="submit">댓글 작성</button>
-        </form>
+    <ul>
+        <li th:each="comment : ${comments}">
+            <strong th:text="${comment.author.name}">작성자</strong>
+            <span th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+            <p th:text="${comment.content}"></p>
 
-        <ul>
-            <li th:each="comment : ${comments}">
-                <strong th:text="${comment.author.name}">작성자</strong>
-                <span th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
-                <p th:text="${comment.content}"></p>
+            <!-- 작성자 본인 또는 관리자만 삭제 버튼 보임 -->
+            <form sec:authorize="isAuthenticated() and (authentication.principal.username == ${comment.author.email} or hasRole('ADMIN'))"
+                  th:action="@{'/comments/' + ${comment.id} + '/delete'}"
+                  method="post">
+                <input type="hidden" name="pageId" th:value="${pageId}">
+                <button type="submit">삭제</button>
+            </form>
+        </li>
+    </ul>
+</section>
+<footer>
+    <p id="footer-year">&copy; <span id="current-year"></span> My Homepage. All rights reserved.</p>
+</footer>
 
-                <!-- 작성자 본인 또는 관리자만 삭제 버튼 보임 -->
-                <form sec:authorize="isAuthenticated() and (authentication.principal.username == ${comment.author.email} or hasRole('ADMIN'))"
-                      th:action="@{'/comments/' + ${comment.id} + '/delete'}"
-                      method="post">
-                    <input type="hidden" name="pageId" th:value="${pageId}">
-                    <button type="submit">삭제</button>
-                </form>
-            </li>
-        </ul>
-    </section>
-    <footer>
-        <p id="footer-year">&copy; <span id="current-year"></span> My Homepage. All rights reserved.</p>
-    </footer>
-
-    <script>
-        // JavaScript로 년도 쉽게 업데이트하기
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-    </script>
+<script>
+    // JavaScript로 년도 쉽게 업데이트하기
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
