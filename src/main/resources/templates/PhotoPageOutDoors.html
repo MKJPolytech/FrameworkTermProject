@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -184,14 +186,14 @@ window.addEventListener('load', initializeLightboxKeyboardNavigation);
 <body>
 <div class="login-area" style="position:absolute; right:20px; top:10px;">
     <!-- 로그인 안 한 상태 -->
-    <a th:if="${#request.userPrincipal == null}" th:href="@{/login}">로그인</a>
+    <a sec:authorize="!isAuthenticated()" th:href="@{/login}">로그인</a>
 
     <!-- 로그인 한 상태 -->
-    <form th:if="${#request.userPrincipal != null}"
-          th:action="@{/logout}" method="post" style="display:inline;">
-        <span th:text="${#request.userPrincipal.name}">user</span>
-        <button type="submit">로그아웃</button>
-    </form>
+<form sec:authorize="isAuthenticated()"
+      th:action="@{/logout}" method="post" style="display:inline;">
+    <span sec:authentication="principal.username">user</span>
+    <button type="submit">로그아웃</button>
+</form>
 </div>
     <header id="container">
         <h1>버디의 야외 사진</h1>
@@ -236,15 +238,12 @@ window.addEventListener('load', initializeLightboxKeyboardNavigation);
         <h3>댓글</h3>
 
         <!-- 로그인 안 한 상태 -->
-        <div th:if="${#request.userPrincipal == null}">
-            <p>
-                댓글을 쓰려면
-                <a th:href="@{/login}">로그인</a> 해야 합니다.
-            </p>
+        <div sec:authorize="!isAuthenticated()">
+            <p>댓글을 쓰려면 <a th:href="@{/login}">로그인</a> 해야 합니다.</p>
         </div>
 
         <!-- 로그인 한 상태일 때만 작성 가능 -->
-        <form th:if="${#request.userPrincipal != null}"
+        <form sec:authorize="isAuthenticated()"
               th:action="@{/comments}" method="post">
             <!-- 현재 페이지 구분 -->
             <input type="hidden" name="pageId" th:value="${pageId}">
@@ -259,8 +258,7 @@ window.addEventListener('load', initializeLightboxKeyboardNavigation);
                 <p th:text="${comment.content}"></p>
 
                 <!-- 작성자 본인 또는 관리자만 삭제 버튼 보임 -->
-                <form th:if="${#request.userPrincipal != null and
-                          (#request.userPrincipal.name == comment.author.email or #authorization.expression('hasRole(''ADMIN'')'))}"
+                <form sec:authorize="isAuthenticated() and (authentication.principal.username == ${comment.author.email} or hasRole('ADMIN'))"
                       th:action="@{'/comments/' + ${comment.id} + '/delete'}"
                       method="post">
                     <input type="hidden" name="pageId" th:value="${pageId}">
