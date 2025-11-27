@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:buddydb;MODE=MySQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update   # 개발 중에는 update, 완성 후에는 validate 권장
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+server:
+  port: 8080
+
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/buddydb?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+#    username: buddy
+#    password: buddy1234
+#    driver-class-name: com.mysql.cj.jdbc.Driver

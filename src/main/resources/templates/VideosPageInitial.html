@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>버디의 동영상</title>
+    <style>
+        body {
+            background-image: url('/images/cropped_image.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            width: 500px;
+            height: 40px;
+            background: greenyellow;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            left: 50%;
+            top: 10%;
+            transform: translate(-50%, -50%);
+        }
+        nav {
+            margin-top: 300px;
+            margin-left: 50px;
+            background-color: none;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        nav ul li {
+            float: left;
+        }
+        nav ul li a {
+            display: block;
+            color: red;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        nav ul li a:hover {
+            background-color: #111;
+        }
+        main {
+            padding: 1em;
+            color: red;
+        }
+        footer {
+            color: white;
+            text-align: center;
+            padding: 1em;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        @media (max-width: 600px) {
+            body {
+                background-size: 100%;
+            }
+            header {
+                width: 90%; 
+                height: 1em; 
+                padding: 20px; 
+                top: 2%; 
+            }
+            nav ul li {
+                float: none;
+                width: 100%;
+            }
+            nav ul li a {
+                text-align: left;
+                padding: 3em;
+            }
+        }
+        #category-container {
+            width: 90%; 
+            min-height: 500px;
+            background: rgb(236, 230, 230);
+            margin: 50px auto;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .category {
+            text-align: center;
+            width: 45%;
+        }
+        .category img {
+            max-width: 100%;
+            height: auto;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+        .category a {
+            text-decoration: none;
+            color: black;
+            display: block;
+            margin-top: 10px;
+            font-size: 1.2em;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="login-area" style="position:absolute; right:20px; top:10px;">
+    <!-- 로그인 안 한 상태 -->
+    <a th:if="${#request.userPrincipal == null}" th:href="@{/login}">로그인</a>
+
+    <!-- 로그인 한 상태 -->
+    <form th:if="${#request.userPrincipal != null}"
+          th:action="@{/logout}" method="post" style="display:inline;">
+        <span th:text="${#request.userPrincipal.name}">user</span>
+        <button type="submit">로그아웃</button>
+    </form>
+</div>
+    <header id="container">
+        <h1>버디의 동영상</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a th:href="@{/home}">홈</a></li>
+<li><a th:href="@{/photos}">사진</a></li>
+<li><a th:href="@{/videos}">동영상</a></li>
+<li><a th:href="@{/info}">정보</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h2>버디의 동영상</h2>
+        <p>버디랑 찍은 사랑스러운 동영상들을 마음껏 보세요.</p>
+        <div id="category-container">
+            <div class="category">
+                <a th:href="@{/videos/outdoors}">
+                    <img th:src="@{/images/2024_05_15_15_39.mp4_20240610_134654.844.jpg}" alt="야외 동영상">
+                    <span>야외 동영상</span>
+                </a>
+            </div>
+            <div class="category">
+                <a th:href="@{/videos/indoors}">
+                    <img th:src="@{/images/2024_05_15_15_37.mp4_20240610_134554.766.jpg}" alt="실내 동영상">
+                    <span>실내 동영상</span>
+                </a>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 My Homepage. All rights reserved.</p>
+    </footer>
+</body>
+</html>

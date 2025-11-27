@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 - 버디의 홈페이지</title>
+    <style>
+        body {
+            background-image: url('/images/cropped_image.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+        }
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background: greenyellow;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button[type="submit"]:hover {
+            background: #adff2f;
+        }
+        .message {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .error {
+            background: #ffe6e6;
+            color: #d32f2f;
+            border: 1px solid #d32f2f;
+        }
+        .success {
+            background: #e6ffe6;
+            color: #2f7d32;
+            border: 1px solid #2f7d32;
+        }
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #555;
+        }
+        .signup-link a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+        .home-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .home-link a {
+            color: #666;
+            text-decoration: none;
+        }
+        .home-link a:hover {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <h1>🐕 버디의 홈페이지 로그인</h1>
+
+    <!-- 에러 메시지 -->
+    <div th:if="${param.error}" class="message error">
+        이메일 또는 비밀번호가 올바르지 않습니다.
+    </div>
+
+    <!-- 로그아웃 메시지 -->
+    <div th:if="${param.logout}" class="message success">
+        로그아웃 되었습니다.
+    </div>
+
+    <!-- 회원가입 성공 메시지 -->
+    <div th:if="${param.signup}" class="message success">
+        회원가입이 완료되었습니다. 로그인해주세요.
+    </div>
+
+    <!-- 회원탈퇴 메시지 -->
+    <div th:if="${param.deleted}" class="message success">
+        회원탈퇴가 완료되었습니다.
+    </div>
+
+    <form th:action="@{/login}" method="post">
+        <div class="form-group">
+            <label for="email">이메일</label>
+            <input type="email" id="email" name="email" required autofocus
+                   placeholder="example@email.com">
+        </div>
+
+        <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" name="password" required
+                   placeholder="비밀번호를 입력하세요">
+        </div>
+
+        <button type="submit">로그인</button>
+    </form>
+
+    <div class="signup-link">
+        <p>아직 회원이 아니라면? <a th:href="@{/signup}">회원가입</a></p>
+    </div>
+
+    <div class="home-link">
+        <a th:href="@{/home}">← 홈으로 돌아가기</a>
+    </div>
+</div>
+</body>
+</html>
