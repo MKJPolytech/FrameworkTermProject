@@ -4,105 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인 - 버디의 홈페이지</title>
-    <style>
-        body {
-            background-image: url('/images/cropped_image.jpg');
-            background-repeat: no-repeat;
-            background-size: cover;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .login-container {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 400px;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-weight: bold;
-        }
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-            font-size: 14px;
-        }
-        button[type="submit"] {
-            width: 100%;
-            padding: 12px;
-            background: greenyellow;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        button[type="submit"]:hover {
-            background: #adff2f;
-        }
-        .message {
-            padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            text-align: center;
-        }
-        .error {
-            background: #ffe6e6;
-            color: #d32f2f;
-            border: 1px solid #d32f2f;
-        }
-        .success {
-            background: #e6ffe6;
-            color: #2f7d32;
-            border: 1px solid #2f7d32;
-        }
-        .signup-link {
-            text-align: center;
-            margin-top: 20px;
-            color: #555;
-        }
-        .signup-link a {
-            color: #007bff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .signup-link a:hover {
-            text-decoration: underline;
-        }
-        .home-link {
-            text-align: center;
-            margin-top: 15px;
-        }
-        .home-link a {
-            color: #666;
-            text-decoration: none;
-        }
-        .home-link a:hover {
-            color: #333;
-        }
-    </style>
+
+    <!-- ✅ 배경/폰트 공통: common.css -->
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <!-- ✅ 로그인 레이아웃/폼: auth.css -->
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
 </head>
 <body>
 <div class="login-container">

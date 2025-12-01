@@ -4,46 +4,70 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>회원 관리</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원 관리 - 버디의 홈페이지</title>
+
+    <link rel="stylesheet" th:href="@{/css/common.css}">
 </head>
 <body>
+<div class="login-area">
+    <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+        <span sec:authentication="principal.username">admin</span>
+        <button type="submit">로그아웃</button>
+    </form>
+</div>
 
-<header>
-    <nav>
-        <a th:href="@{/home}">홈</a>
-        <a th:href="@{/admin/members}">회원 관리</a>
-        <a th:href="@{/logout}">로그아웃</a>
-    </nav>
+<header id="container">
+    <h1>관리자 - 회원 관리</h1>
 </header>
 
-<main>
-    <h1>회원 관리</h1>
+<nav>
+    <ul>
+        <li><a th:href="@{/home}">홈</a></li>
+        <li><a th:href="@{/admin/members}">회원 관리</a></li>
+        <li><a th:href="@{/admin/comments}">댓글 관리</a></li>
+    </ul>
+</nav>
 
-    <table border="1" cellpadding="5" cellspacing="0">
+<main style="max-width: 900px; margin: 40px auto; background: rgba(255,255,255,0.9); padding: 20px; border-radius: 12px;">
+    <h2>회원 목록</h2>
+
+    <table style="width: 100%; border-collapse: collapse;">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>이메일</th>
-            <th>이름</th>
-            <th>역할</th>
-            <th>가입일</th>
-            <th>댓글</th>
+            <th style="border-bottom: 2px solid #ccc; padding: 8px;">ID</th>
+            <th style="border-bottom: 2px solid #ccc; padding: 8px;">이름</th>
+            <th style="border-bottom: 2px solid #ccc; padding: 8px;">이메일</th>
+            <th style="border-bottom: 2px solid #ccc; padding: 8px;">권한</th>
+            <th style="border-bottom: 2px solid #ccc; padding: 8px;">관리</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="member : ${members}">
-            <td th:text="${member.id}">1</td>
-            <td th:text="${member.email}">email</td>
-            <td th:text="${member.name}">name</td>
-            <td th:text="${member.role}">USER</td>
-            <td th:text="${#temporals.format(member.createdAt, 'yyyy-MM-dd HH:mm')}">2025-01-01</td>
-            <td>
-                <a th:href="@{'/admin/members/' + ${member.id} + '/comments'}">댓글 보기</a>
+            <td th:text="${member.id}" style="border-bottom: 1px solid #eee; padding: 8px;">1</td>
+            <td th:text="${member.name}" style="border-bottom: 1px solid #eee; padding: 8px;">홍길동</td>
+            <td th:text="${member.email}" style="border-bottom: 1px solid #eee; padding: 8px;">test@test.com</td>
+            <td th:text="${member.role}" style="border-bottom: 1px solid #eee; padding: 8px;">ROLE_USER</td>
+            <td style="border-bottom: 1px solid #eee; padding: 8px;">
+                <!-- 예시: 회원 삭제 버튼 (URL은 실제 컨트롤러에 맞게 수정해서 사용) -->
+                <form th:action="@{'/admin/members/' + ${member.id} + '/delete'}"
+                      method="post"
+                      onsubmit="return confirm('해당 회원을 삭제하시겠습니까?');">
+                    <button type="submit">삭제</button>
+                </form>
             </td>
         </tr>
         </tbody>
     </table>
 </main>
 
+<footer>
+    <p id="footer-year">&copy; <span id="current-year"></span> My Homepage. All rights reserved.</p>
+</footer>
+
+<script>
+    // JavaScript로 년도 쉽게 업데이트하기
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>

@@ -6,273 +6,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>버디의 야외 동영상</title>
-    <style>
-        body {
-            background-image: url('/images/cropped_image.jpg');
-            background-repeat: no-repeat;
-            background-size: cover;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            width: 500px;
-            height: 40px;
-            background: greenyellow;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: absolute;
-            left: 50%;
-            top: 10%;
-            transform: translate(-50%, -50%);
-        }
-        nav {
-            margin-top: 300px;
-            margin-left: 50px;
-            background-color: none;
-        }
-        nav ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-        nav ul li {
-            float: left;
-        }
-        nav ul li a {
-            display: block;
-            color: red;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-        nav ul li a:hover {
-            background-color: #111;
-        }
-        main {
-            padding: 1em;
-            color: red;
-        }
-        #mediacontainer {
-            width: 90%;
-            min-height: 500px;
-            background: rgb(236, 230, 230);
-            margin: 50px auto;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
-        #mediacontainer img {
-            max-width: 150px;
-            height: auto;
-            display: block;
-            cursor: pointer;
-            margin: 10px;
-        }
-        .lightbox {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-        .lightbox img {
-            max-width: 90%;
-            max-height: 90%;
-        }
-        .lightbox:target {
-            display: flex;
-        }
 
-        /* 댓글 섹션 스타일 */
-        #comments {
-            max-width: 800px;
-            margin: 50px auto;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        #comments h3 {
-            color: #333;
-            font-size: 24px;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid greenyellow;
-        }
-
-        #comments > div p, #comments form, #comments ul {
-            color: #333;
-        }
-
-        #comments > div {
-            background: #fff3cd;
-            border: 1px solid #ffc107;
-            color: #856404;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        #comments > div a {
-            color: #007bff;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        #comments > div a:hover {
-            text-decoration: underline;
-        }
-
-        #comments textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 14px;
-            font-family: Arial, sans-serif;
-            resize: vertical;
-            min-height: 100px;
-            box-sizing: border-box;
-        }
-
-        #comments textarea:focus {
-            outline: none;
-            border-color: greenyellow;
-        }
-
-        #comments form button[type="submit"] {
-            background: greenyellow;
-            color: #333;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        #comments form button[type="submit"]:hover {
-            background: #adff2f;
-        }
-
-        #comments ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        #comments ul li {
-            background: #f8f9fa;
-            padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 10px;
-            border-left: 4px solid greenyellow;
-        }
-
-        #comments ul li strong {
-            color: #333;
-            font-size: 16px;
-        }
-
-        #comments ul li span {
-            color: #666;
-            font-size: 12px;
-        }
-
-        #comments ul li p {
-            color: #333;
-            font-size: 14px;
-            line-height: 1.6;
-            margin: 10px 0;
-        }
-
-        #comments ul li form button {
-            background: #dc3545;
-            color: white;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 5px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        #comments ul li form button:hover {
-            background: #c82333;
-        }
-
-        footer {
-            color: white;
-            text-align: center;
-            padding: 1em;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
-        @media (max-width: 600px) {
-            body {
-                background-size: 100%;
-            }
-            header {
-                width: 90%;
-                height: 1em;
-                padding: 20px;
-                top: 2%;
-            }
-            nav ul li {
-                float: none;
-                width: 100%;
-            }
-            nav ul li a {
-                text-align: left;
-                padding: 3em;
-            }
-
-            #comments {
-                margin: 30px 10px;
-                padding: 20px;
-            }
-
-            #comments h3 {
-                font-size: 20px;
-            }
-
-            #comments textarea {
-                min-height: 80px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/comments.css}">
 </head>
 <body>
-<div class="login-area" style="position:absolute; right:20px; top:10px;">
+<div class="login-area">
     <!-- 로그인 안 한 상태 -->
-    <form sec:authorize="!isAuthenticated()" th:action="@{/login}" method="get" style="display:inline;">
+    <form sec:authorize="!isAuthenticated()" th:action="@{/login}" method="get">
         <button type="submit">로그인</button>
     </form>
 
     <!-- 로그인 한 상태 -->
     <form sec:authorize="isAuthenticated()"
-          th:action="@{/logout}" method="post" style="display:inline;">
+          th:action="@{/logout}" method="post">
         <span sec:authentication="principal.username">user</span>
         <button type="submit">로그아웃</button>
     </form>
 </div>
+
 <header id="container">
     <h1>버디의 야외 동영상</h1>
 </header>
+
 <nav>
     <ul>
         <li><a th:href="@{/home}">홈</a></li>
@@ -281,16 +37,19 @@
         <li><a th:href="@{/info}">정보</a></li>
     </ul>
 </nav>
+
 <main>
     <h2>버디의 야외 동영상</h2>
     <p>버디랑 찍은 사랑스러운 야외 동영상들을 마음껏 보세요.</p>
 </main>
+
 <div id="mediacontainer">
     <video controls>
         <source th:src="@{/videos/2024_05_15_15_39.mp4}" type="video/mp4">
         이 브라우저는 동영상 태그를 지원하지 않습니다.
     </video>
 </div>
+
 <section id="comments">
     <h3>💬 댓글</h3>
 
@@ -326,7 +85,12 @@
 </section>
 
 <footer>
-    <p>&copy; 2024 My Homepage. All rights reserved.</p>
+    <p id="footer-year">&copy; <span id="current-year"></span> My Homepage. All rights reserved.</p>
 </footer>
+
+<script>
+    // JavaScript로 년도 쉽게 업데이트하기
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>

@@ -1,0 +1,235 @@
+/* ===================================
+   인증 페이지 공통 body 스타일
+   =================================== */
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* ===================================
+   로그인 컨테이너
+   =================================== */
+
+.login-container {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+}
+
+/* ===================================
+   회원가입 컨테이너
+   =================================== */
+
+.signup-container {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+}
+
+/* ===================================
+   제목
+   =================================== */
+
+.login-container h1,
+.signup-container h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 24px;
+}
+
+/* ===================================
+   폼 그룹
+   =================================== */
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* ===================================
+   입력 필드
+   =================================== */
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: greenyellow;
+}
+
+/* ===================================
+   제출 버튼
+   =================================== */
+
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background: greenyellow;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background: #adff2f;
+}
+
+/* ===================================
+   메시지 박스
+   =================================== */
+
+.message {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.error {
+    background: #ffe6e6;
+    color: #d32f2f;
+    border: 1px solid #d32f2f;
+}
+
+.success {
+    background: #e6ffe6;
+    color: #2f7d32;
+    border: 1px solid #2f7d32;
+}
+
+/* ===================================
+   추가 정보 텍스트
+   =================================== */
+
+.info-text {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* ===================================
+   링크 영역
+   =================================== */
+
+.signup-link,
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+    color: #555;
+    font-size: 14px;
+}
+
+.signup-link p,
+.login-link p {
+    margin: 0;
+}
+
+.signup-link a,
+.login-link a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup-link a:hover,
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* ===================================
+   홈으로 돌아가기 링크
+   =================================== */
+
+.home-link {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.home-link a {
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.home-link a:hover {
+    color: #333;
+}
+
+/* ===================================
+   반응형 디자인 (모바일)
+   =================================== */
+
+@media (max-width: 600px) {
+    .login-container,
+    .signup-container {
+        padding: 30px 20px;
+        max-width: 90%;
+    }
+
+    .login-container h1,
+    .signup-container h1 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        padding: 8px;
+        font-size: 13px;
+    }
+
+    button[type="submit"] {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+/* ===================================
+   태블릿 최적화
+   =================================== */
+
+@media (min-width: 601px) and (max-width: 1024px) {
+    .login-container,
+    .signup-container {
+        max-width: 450px;
+    }
+}

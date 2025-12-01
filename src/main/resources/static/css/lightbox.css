@@ -1,0 +1,146 @@
+/* ===================================
+   미디어 컨테이너
+   =================================== */
+
+#mediacontainer {
+    width: 90%;
+    min-height: 500px;
+    background: rgb(236, 230, 230);
+    margin: 50px auto;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* ===================================
+   썸네일 이미지
+   =================================== */
+
+#mediacontainer img {
+    max-width: 150px;
+    height: auto;
+    display: block;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#mediacontainer img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+#mediacontainer a {
+    text-decoration: none;
+}
+
+/* ===================================
+   비디오 플레이어
+   =================================== */
+
+#mediacontainer video {
+    max-width: 100%;
+    width: 800px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ===================================
+   라이트박스 오버레이
+   =================================== */
+
+.lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+.lightbox:target {
+    display: flex;
+}
+
+/* ===================================
+   라이트박스 이미지
+   =================================== */
+
+.lightbox img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s ease;
+}
+
+/* ===================================
+   페이드인 애니메이션
+   =================================== */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ===================================
+   반응형 디자인 (모바일)
+   =================================== */
+
+@media (max-width: 600px) {
+    #mediacontainer {
+        width: 95%;
+        min-height: 300px;
+        padding: 15px;
+        margin: 30px auto;
+    }
+
+    #mediacontainer img {
+        max-width: 120px;
+        margin: 5px;
+    }
+
+    #mediacontainer video {
+        width: 100%;
+    }
+
+    .lightbox img {
+        max-width: 95%;
+        max-height: 80%;
+    }
+}
+
+/* ===================================
+   태블릿 최적화
+   =================================== */
+
+@media (min-width: 601px) and (max-width: 1024px) {
+    #mediacontainer {
+        width: 90%;
+    }
+
+    #mediacontainer img {
+        max-width: 130px;
+    }
+
+    #mediacontainer video {
+        width: 90%;
+    }
+}

@@ -27,185 +27,28 @@
         };
     </script>
 
-    <style>
-
-        body {
-            background-image: url('/images/cropped_image.jpg');
-            background-repeat: no-repeat;
-            background-size: cover;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            width: 500px;
-            height: 40px;
-            background: greenyellow;
-
-            /* 헤더 중심화 */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            /* 포지션 */
-            position: absolute;
-            left: 50%;
-            top: 10%;
-            transform: translate(-50%, -50%);
-        }
-        nav {
-            margin-top: 300px;
-            margin-left: 50px;
-            background-color: none;
-        }
-        nav ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-        nav ul li {
-            float: left;
-        }
-        nav ul li a {
-            display: block;
-            color: red;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-        nav ul li a:hover {
-            background-color: #111;
-        }
-        main {
-            padding: 1em;
-            color: red;
-        }
-
-        /* 메인 컨텐츠 카드 */
-        .content-card {
-            max-width: 800px;
-            margin: 50px auto;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        .content-card h2 {
-            color: #333;
-            font-size: 28px;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .content-card p {
-            color: #555;
-            font-size: 16px;
-            line-height: 1.8;
-            text-align: center;
-        }
-
-        /* 명언 박스 */
-        #quote-container {
-            max-width: 800px;
-            margin: 30px auto;
-            background: rgba(173, 255, 47, 0.9);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
-
-        #quote-container h3 {
-            color: #333;
-            font-size: 24px;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #fff;
-        }
-
-        #quote-text {
-            color: #333;
-            font-size: 20px;
-            font-style: italic;
-            line-height: 1.6;
-            font-weight: 500;
-        }
-
-        footer {
-            color: white;
-            text-align: center;
-            padding: 1em;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.3);
-        }
-
-        @media (max-width: 600px) {
-            body {
-                background-size: 100%;
-            }
-            header {
-                width: 90%;
-                height: 1em;
-                padding: 20px;
-                top: 2%;
-            }
-            nav {
-                margin-top: 200px;
-            }
-            nav ul li {
-                float: none;
-                width: 100%;
-            }
-            nav ul li a {
-                text-align: left;
-                padding: 3em;
-            }
-
-            .content-card {
-                margin: 30px 10px;
-                padding: 20px;
-            }
-
-            .content-card h2 {
-                font-size: 22px;
-            }
-
-            #quote-container {
-                margin: 20px 10px;
-                padding: 20px;
-            }
-
-            #quote-container h3 {
-                font-size: 20px;
-            }
-
-            #quote-text {
-                font-size: 16px;
-            }
-        }
-    </style>
+    <!-- ✅ 공통 레이아웃 / 카드 / 명언 박스 등 -->
+    <link rel="stylesheet" th:href="@{/css/common.css}">
 </head>
 <body>
-<div class="login-area" style="position:absolute; right:20px; top:10px;">
+<div class="login-area">
     <!-- 로그인 안 한 상태 -->
-    <form sec:authorize="!isAuthenticated()" th:action="@{/login}" method="get" style="display:inline;">
+    <form sec:authorize="!isAuthenticated()" th:action="@{/login}" method="get">
         <button type="submit">로그인</button>
     </form>
 
     <!-- 로그인 한 상태 -->
     <form sec:authorize="isAuthenticated()"
-          th:action="@{/logout}" method="post" style="display:inline;">
+          th:action="@{/logout}" method="post">
         <span sec:authentication="principal.username">user</span>
         <button type="submit">로그아웃</button>
     </form>
 </div>
+
 <header id="container">
     <h1>버디의 홈페이지</h1>
 </header>
+
 <nav>
     <ul>
         <li><a th:href="@{/home}">홈</a></li>
@@ -214,8 +57,9 @@
         <li><a th:href="@{/info}">정보</a></li>
     </ul>
 </nav>
+
+<!-- 빨간 글씨 숨김 처리는 유지 -->
 <main style="color: transparent;">
-    <!-- 빨간 글씨 숨김 처리 -->
     <h2>버디의 홈페이지</h2>
     <p>이곳은 저희 집의 사랑스러운 강아지인 버디의 홈페이지 입니다.</p>
     <p id="current-date"></p>
@@ -231,6 +75,7 @@
     <h3>💭 오늘의 명언</h3>
     <p id="quote-text"></p>
 </div>
+
 <li sec:authorize="isAuthenticated()">
     <a th:href="@{/mypage}">마이페이지</a>
 </li>
@@ -239,7 +84,12 @@
 </li>
 
 <footer>
-    <p>&copy; 2024 My Homepage. All rights reserved.</p>
+    <p id="footer-year">&copy; <span id="current-year"></span> My Homepage. All rights reserved.</p>
 </footer>
+
+<script>
+    // JavaScript로 년도 쉽게 업데이트하기
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>

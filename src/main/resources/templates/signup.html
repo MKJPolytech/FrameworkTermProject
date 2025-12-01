@@ -4,155 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입 - 버디의 홈페이지</title>
-    <style>
-        body {
-            background-image: url('/images/cropped_image.jpg');
-            background-repeat: no-repeat;
-            background-size: cover;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .signup-container {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 400px;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-weight: bold;
-        }
-        input[type="text"],
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-            font-size: 14px;
-        }
-        input:focus {
-            outline: none;
-            border-color: greenyellow;
-        }
-        button[type="submit"] {
-            width: 100%;
-            padding: 12px;
-            background: greenyellow;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        button[type="submit"]:hover {
-            background: #adff2f;
-        }
-        .login-link {
-            text-align: center;
-            margin-top: 20px;
-            color: #555;
-        }
-        .login-link a {
-            color: #007bff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .login-link a:hover {
-            text-decoration: underline;
-        }
-        .info-text {
-            font-size: 12px;
-            color: #666;
-            margin-top: 5px;
-        }
-        .home-link {
-            text-align: center;
-            margin-top: 15px;
-        }
-        .home-link a {
-            color: #666;
-            text-decoration: none;
-        }
-        .home-link a:hover {
-            color: #333;
-        }
-    </style>
-    <script>
-        function validateForm() {
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
 
-            if (password !== confirmPassword) {
-                alert('비밀번호가 일치하지 않습니다.');
-                return false;
-            }
-
-            if (password.length < 4) {
-                alert('비밀번호는 4자 이상이어야 합니다.');
-                return false;
-            }
-
-            return true;
-        }
-    </script>
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
 </head>
 <body>
 <div class="signup-container">
     <h1>🐕 버디의 홈페이지 회원가입</h1>
 
-    <form th:action="@{/signup}" method="post" onsubmit="return validateForm()">
+    <form th:action="@{/signup}" method="post">
         <div class="form-group">
             <label for="name">이름</label>
-            <input type="text" id="name" name="name" required autofocus
-                   placeholder="홍길동">
+            <input type="text" id="name" name="name" required placeholder="이름을 입력하세요">
         </div>
 
         <div class="form-group">
             <label for="email">이메일</label>
-            <input type="email" id="email" name="email" required
-                   placeholder="example@email.com">
-            <div class="info-text">이메일이 로그인 아이디로 사용됩니다.</div>
+            <input type="email" id="email" name="email" required placeholder="example@email.com">
         </div>
 
         <div class="form-group">
             <label for="password">비밀번호</label>
-            <input type="password" id="password" name="password" required
-                   placeholder="비밀번호 (4자 이상)">
+            <input type="password" id="password" name="password" required placeholder="비밀번호를 입력하세요">
         </div>
 
+        <!-- 필요하면 비밀번호 확인 필드 추가
         <div class="form-group">
-            <label for="confirmPassword">비밀번호 확인</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" required
-                   placeholder="비밀번호를 다시 입력하세요">
+            <label for="passwordConfirm">비밀번호 확인</label>
+            <input type="password" id="passwordConfirm" name="passwordConfirm" required>
         </div>
+        -->
 
-        <button type="submit">가입하기</button>
+        <button type="submit">회원가입</button>
     </form>
 
-    <div class="login-link">
-        <p>이미 회원이라면? <a th:href="@{/login}">로그인</a></p>
+    <div class="home-link">
+        <a th:href="@{/login}">이미 계정이 있나요? 로그인</a>
     </div>
-
     <div class="home-link">
         <a th:href="@{/home}">← 홈으로 돌아가기</a>
     </div>

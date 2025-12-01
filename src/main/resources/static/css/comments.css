@@ -1,0 +1,199 @@
+/* ===================================
+   댓글 섹션 컨테이너
+   =================================== */
+
+#comments {
+    max-width: 800px;
+    margin: 50px auto;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* ===================================
+   댓글 섹션 제목
+   =================================== */
+
+#comments h3 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid greenyellow;
+}
+
+/* ===================================
+   댓글 작성 영역
+   =================================== */
+
+#comments form {
+    margin-bottom: 30px;
+}
+
+#comments textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    resize: vertical;
+    min-height: 100px;
+    box-sizing: border-box;
+}
+
+#comments textarea:focus {
+    outline: none;
+    border-color: greenyellow;
+}
+
+#comments form button[type="submit"] {
+    background: greenyellow;
+    color: #333;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s ease;
+}
+
+#comments form button[type="submit"]:hover {
+    background: #adff2f;
+}
+
+/* ===================================
+   로그인 안내 메시지
+   =================================== */
+
+#comments > div {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    color: #856404;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#comments > div p {
+    color: #856404;
+    margin: 0;
+}
+
+#comments > div a {
+    color: #007bff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#comments > div a:hover {
+    text-decoration: underline;
+}
+
+/* ===================================
+   댓글 목록
+   =================================== */
+
+#comments ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#comments ul li {
+    background: #f8f9fa;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border-left: 4px solid greenyellow;
+}
+
+/* 댓글 작성자 정보 */
+#comments ul li strong {
+    color: #333;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+#comments ul li span {
+    color: #666;
+    font-size: 12px;
+}
+
+/* 댓글 내용 */
+#comments ul li p {
+    color: #333;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+/* ===================================
+   댓글 삭제 버튼
+   =================================== */
+
+#comments ul li form {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+#comments ul li form button {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#comments ul li form button:hover {
+    background: #c82333;
+}
+
+/* ===================================
+   반응형 디자인 (모바일)
+   =================================== */
+
+@media (max-width: 600px) {
+    #comments {
+        margin: 30px 10px;
+        padding: 20px;
+    }
+
+    #comments h3 {
+        font-size: 20px;
+    }
+
+    #comments textarea {
+        min-height: 80px;
+        font-size: 13px;
+    }
+
+    #comments form button[type="submit"] {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    #comments ul li {
+        padding: 15px;
+    }
+
+    #comments ul li strong {
+        font-size: 14px;
+    }
+
+    #comments ul li p {
+        font-size: 13px;
+    }
+
+    #comments ul li form button {
+        padding: 6px 15px;
+        font-size: 12px;
+    }
+}

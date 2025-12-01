@@ -4,73 +4,69 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>마이페이지 - 버디</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지 - 버디의 홈페이지</title>
+
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
 </head>
 <body>
-
-<header>
-    <!-- 기존 HomePage.html의 메뉴 일부를 복붙해서 사용 -->
-    <nav>
-        <a th:href="@{/home}">홈</a>
-        <a th:href="@{/info}">정보</a>
-        <a th:href="@{/photos/indoor}">실내 사진</a>
-        <a th:href="@{/videos/indoor}">실내 영상</a>
-
-        <span sec:authorize="isAuthenticated()">
-            <a th:href="@{/mypage}">마이페이지</a>
-            <a th:href="@{/logout}">로그아웃</a>
-        </span>
-        <span sec:authorize="isAnonymous()">
-            <a th:href="@{/login}">로그인</a>
-        </span>
-    </nav>
-</header>
-
-<main>
-    <h1>마이페이지</h1>
-
-    <div th:if="${param.success}">
-        <p style="color: green;">정보가 수정되었습니다.</p>
-    </div>
-
-    <form th:action="@{/mypage}" method="post" th:object="${member}">
-        <div>
-            <label>이메일 (로그인 ID)</label><br>
-            <input type="email" th:field="*{email}" readonly>
-        </div>
-
-        <div>
-            <label>이름</label><br>
-            <input type="text" th:field="*{name}" required>
-        </div>
-
-        <div>
-            <label>한 줄 소개</label><br>
-            <textarea th:field="*{bio}" rows="3"
-                      placeholder="버디와 나를 한 줄로 소개해 보세요"></textarea>
-        </div>
-
-        <hr>
-
-        <h2>비밀번호 변경 (선택)</h2>
-        <div>
-            <label>새 비밀번호</label><br>
-            <input type="password" name="newPassword">
-        </div>
-        <p style="font-size: 0.9em; color: #666;">
-            비밀번호를 변경하지 않으려면 비워 두세요.
-        </p>
-
-        <button type="submit">저장</button>
+<div class="login-area">
+    <!-- 로그인 안 한 상태 -->
+    <form sec:authorize="!isAuthenticated()" th:action="@{/login}" method="get">
+        <button type="submit">로그인</button>
     </form>
 
-    <section style="margin-top: 2rem;">
-        <h2>내가 쓴 댓글 보기</h2>
-        <a th:href="@{/mypage/comments}">내 댓글 목록으로 이동</a>
-    </section>
+    <!-- 로그인 한 상태 -->
+    <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+        <span sec:authentication="principal.username">user</span>
+        <button type="submit">로그아웃</button>
+    </form>
+</div>
 
-</main>
+<header id="container">
+    <h1>마이페이지</h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a th:href="@{/home}">홈</a></li>
+        <li><a th:href="@{/photos}">사진</a></li>
+        <li><a th:href="@{/videos}">동영상</a></li>
+        <li><a th:href="@{/info}">정보</a></li>
+    </ul>
+</nav>
+
+<div class="signup-container">
+    <h1>내 정보</h1>
+
+    <div class="form-group">
+        <label>이메일</label>
+        <input type="email" th:value="${member.email}" readonly>
+    </div>
+
+    <div class="form-group">
+        <label>이름</label>
+        <input type="text" th:value="${member.name}" readonly>
+    </div>
+
+    <div class="form-group">
+        <label>권한</label>
+        <input type="text" th:value="${member.role}" readonly>
+    </div>
+
+    <!-- 필요하면 비밀번호 변경 / 닉네임 변경 등 버튼 추가 -->
+    <div class="home-link">
+        <a th:href="@{/home}">← 홈으로 돌아가기</a>
+    </div>
+
+    <!-- 회원 탈퇴 (URL은 실제 컨트롤러에 맞게 바꿔도 됨) -->
+    <form th:action="@{/mypage/delete}" method="post"
+          onsubmit="return confirm('정말로 회원 탈퇴를 진행하시겠습니까?');">
+        <button type="submit">회원 탈퇴</button>
+    </form>
+</div>
 
 </body>
 </html>
+
