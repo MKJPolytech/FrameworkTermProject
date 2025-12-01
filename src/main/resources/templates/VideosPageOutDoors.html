@@ -259,7 +259,9 @@
 <body>
 <div class="login-area" style="position:absolute; right:20px; top:10px;">
     <!-- 로그인 안 한 상태 -->
-    <a sec:authorize="!isAuthenticated()" th:href="@{/login}">로그인</a>
+    <form sec:authorize="!isAuthenticated()" th:action="@{/login}" method="get" style="display:inline;">
+        <button type="submit">로그인</button>
+    </form>
 
     <!-- 로그인 한 상태 -->
     <form sec:authorize="isAuthenticated()"

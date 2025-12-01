@@ -8,6 +8,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PostConstruct;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -48,5 +51,36 @@ public class MemberService {
     public void deleteByEmail(String email) {
         memberRepository.findByEmail(email)
                 .ifPresent(memberRepository::delete);
+    }
+
+    // ✅ 이메일로 회원 한 명 조회
+    public Member getByEmail(String email) {
+        return memberRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다: " + email));
+    }
+
+    // ✅ ID로 회원 한 명 조회 (admin용)
+    public Member getById(Long id) {
+        return memberRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다. id = " + id));
+    }
+
+    // ✅ 전체 회원 목록 (admin용)
+    public List<Member> getAllMembers() {
+        return memberRepository.findAll();
+    }
+
+    // ✅ 마이페이지에서 프로필/비밀번호 수정
+    @Transactional
+    public void updateProfile(String email, String name, String bio, String rawNewPassword) {
+        Member member = getByEmail(email);
+
+        member.setName(name);
+        member.setBio(bio);
+
+        if (rawNewPassword != null && !rawNewPassword.isBlank()) {
+            member.setPassword(passwordEncoder.encode(rawNewPassword));
+        }
+        // JPA dirty checking → save() 안 해도 update 반영
     }
 }

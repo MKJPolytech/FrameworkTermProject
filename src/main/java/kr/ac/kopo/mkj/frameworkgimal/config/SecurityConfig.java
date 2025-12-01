@@ -23,6 +23,8 @@ public class SecurityConfig {
                                 "/info", "/login", "/signup",
                                 "/css/**", "/js/**", "/images/**")
                         .permitAll()
+                        // ✅ 관리자 전용 URL
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         // 댓글 조회는 누구나, 작성/삭제는 인증 필요
                         .requestMatchers("/comments/**").authenticated()
                         .anyRequest().authenticated()

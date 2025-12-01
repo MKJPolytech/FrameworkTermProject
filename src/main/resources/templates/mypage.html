@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지 - 버디</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header>
+    <!-- 기존 HomePage.html의 메뉴 일부를 복붙해서 사용 -->
+    <nav>
+        <a th:href="@{/home}">홈</a>
+        <a th:href="@{/info}">정보</a>
+        <a th:href="@{/photos/indoor}">실내 사진</a>
+        <a th:href="@{/videos/indoor}">실내 영상</a>
+
+        <span sec:authorize="isAuthenticated()">
+            <a th:href="@{/mypage}">마이페이지</a>
+            <a th:href="@{/logout}">로그아웃</a>
+        </span>
+        <span sec:authorize="isAnonymous()">
+            <a th:href="@{/login}">로그인</a>
+        </span>
+    </nav>
+</header>
+
+<main>
+    <h1>마이페이지</h1>
+
+    <div th:if="${param.success}">
+        <p style="color: green;">정보가 수정되었습니다.</p>
+    </div>
+
+    <form th:action="@{/mypage}" method="post" th:object="${member}">
+        <div>
+            <label>이메일 (로그인 ID)</label><br>
+            <input type="email" th:field="*{email}" readonly>
+        </div>
+
+        <div>
+            <label>이름</label><br>
+            <input type="text" th:field="*{name}" required>
+        </div>
+
+        <div>
+            <label>한 줄 소개</label><br>
+            <textarea th:field="*{bio}" rows="3"
+                      placeholder="버디와 나를 한 줄로 소개해 보세요"></textarea>
+        </div>
+
+        <hr>
+
+        <h2>비밀번호 변경 (선택)</h2>
+        <div>
+            <label>새 비밀번호</label><br>
+            <input type="password" name="newPassword">
+        </div>
+        <p style="font-size: 0.9em; color: #666;">
+            비밀번호를 변경하지 않으려면 비워 두세요.
+        </p>
+
+        <button type="submit">저장</button>
+    </form>
+
+    <section style="margin-top: 2rem;">
+        <h2>내가 쓴 댓글 보기</h2>
+        <a th:href="@{/mypage/comments}">내 댓글 목록으로 이동</a>
+    </section>
+
+</main>
+
+</body>
+</html>

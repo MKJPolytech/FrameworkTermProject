@@ -25,6 +25,9 @@ public class Member {
     @Column(nullable = false)
     private String name;
 
+    @Column(length = 500)
+    private String bio;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role = Role.USER;

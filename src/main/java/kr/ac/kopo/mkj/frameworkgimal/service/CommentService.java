@@ -50,4 +50,9 @@ public class CommentService {
             throw new IllegalStateException("삭제 권한 없음");
         }
     }
+
+    // ✅ 회원 기준 댓글 조회 (admin + 마이페이지 양쪽에서 사용)
+    public List<Comment> getCommentsByAuthor(Member author) {
+        return commentRepository.findByAuthorOrderByCreatedAtDesc(author);
+    }
 }

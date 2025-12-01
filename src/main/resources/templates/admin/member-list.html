@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 관리</title>
+</head>
+<body>
+
+<header>
+    <nav>
+        <a th:href="@{/home}">홈</a>
+        <a th:href="@{/admin/members}">회원 관리</a>
+        <a th:href="@{/logout}">로그아웃</a>
+    </nav>
+</header>
+
+<main>
+    <h1>회원 관리</h1>
+
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>이메일</th>
+            <th>이름</th>
+            <th>역할</th>
+            <th>가입일</th>
+            <th>댓글</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="member : ${members}">
+            <td th:text="${member.id}">1</td>
+            <td th:text="${member.email}">email</td>
+            <td th:text="${member.name}">name</td>
+            <td th:text="${member.role}">USER</td>
+            <td th:text="${#temporals.format(member.createdAt, 'yyyy-MM-dd HH:mm')}">2025-01-01</td>
+            <td>
+                <a th:href="@{'/admin/members/' + ${member.id} + '/comments'}">댓글 보기</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+</body>
+</html>
