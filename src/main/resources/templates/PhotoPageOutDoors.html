@@ -29,7 +29,7 @@
                         navigateLightbox(currentLightbox, 'next');
                         break;
                     case 'Escape':
-                        currentLightbox.style.display = 'none'; // Esc 누르면 라이트박스 닫힘
+                        closeLightbox();
                         break;
                     default:
                         return; // 다른 키 누를 시 exit
@@ -62,6 +62,34 @@
                     history.replaceState(null, null, `#${newLightboxId}`);
                 }
             }
+
+            // 라이트박스 닫기 함수
+            function closeLightbox() {
+                const currentLightbox = document.querySelector('.lightbox:target');
+                if (currentLightbox) {
+                    currentLightbox.style.display = 'none';
+                    history.replaceState(null, null, window.location.pathname);
+                }
+            }
+
+            // 라이트박스 클릭 시 닫기
+            lightboxes.forEach(lightbox => {
+                lightbox.addEventListener('click', function(e) {
+                    // 이미지가 아닌 배경을 클릭했을 때만 닫기
+                    if (e.target === this) {
+                        closeLightbox();
+                    }
+                });
+
+                // 이미지 클릭 시 전파 방지
+                const img = lightbox.querySelector('img');
+                if (img) {
+                    img.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        closeLightbox(); // 이미지 클릭시도 닫기
+                    });
+                }
+            });
 
             // 키보드 이벤트 처리 함수
             document.addEventListener('keydown', handleKeyPress);
@@ -99,10 +127,12 @@
         <li><a th:href="@{/info}">정보</a></li>
     </ul>
 </nav>
-<main>
-    <h2>버디의 야외 사진</h2>
+
+<!-- ✅ 기존 빨간 글씨 대신 page-title-card 사용 -->
+<div class="page-title-card">
+    <h2>🌳 버디의 야외 사진</h2>
     <p>버디랑 찍은 사랑스러운 야외 사진들을 마음껏 보세요.</p>
-</main>
+</div>
 
 <div id="mediacontainer">
     <!-- 실외 사진 여기다가 -->

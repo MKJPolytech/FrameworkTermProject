@@ -7,7 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원 관리 - 버디의 홈페이지</title>
 
+    <!-- ✅ 공통 레이아웃 + 관리자 전용 스타일 -->
     <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
 </head>
 <body>
 <div class="login-area">
@@ -25,40 +27,47 @@
     <ul>
         <li><a th:href="@{/home}">홈</a></li>
         <li><a th:href="@{/admin/members}">회원 관리</a></li>
-        <li><a th:href="@{/admin/comments}">댓글 관리</a></li>
     </ul>
 </nav>
 
-<main style="max-width: 900px; margin: 40px auto; background: rgba(255,255,255,0.9); padding: 20px; border-radius: 12px;">
+<main>
     <h2>회원 목록</h2>
 
-    <table style="width: 100%; border-collapse: collapse;">
-        <thead>
-        <tr>
-            <th style="border-bottom: 2px solid #ccc; padding: 8px;">ID</th>
-            <th style="border-bottom: 2px solid #ccc; padding: 8px;">이름</th>
-            <th style="border-bottom: 2px solid #ccc; padding: 8px;">이메일</th>
-            <th style="border-bottom: 2px solid #ccc; padding: 8px;">권한</th>
-            <th style="border-bottom: 2px solid #ccc; padding: 8px;">관리</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="member : ${members}">
-            <td th:text="${member.id}" style="border-bottom: 1px solid #eee; padding: 8px;">1</td>
-            <td th:text="${member.name}" style="border-bottom: 1px solid #eee; padding: 8px;">홍길동</td>
-            <td th:text="${member.email}" style="border-bottom: 1px solid #eee; padding: 8px;">test@test.com</td>
-            <td th:text="${member.role}" style="border-bottom: 1px solid #eee; padding: 8px;">ROLE_USER</td>
-            <td style="border-bottom: 1px solid #eee; padding: 8px;">
-                <!-- 예시: 회원 삭제 버튼 (URL은 실제 컨트롤러에 맞게 수정해서 사용) -->
-                <form th:action="@{'/admin/members/' + ${member.id} + '/delete'}"
-                      method="post"
-                      onsubmit="return confirm('해당 회원을 삭제하시겠습니까?');">
-                    <button type="submit">삭제</button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <!-- ✅ 테이블 래퍼 추가 (모바일 스크롤 대응) -->
+    <div class="table-wrapper">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>이름</th>
+                <th>이메일</th>
+                <th>권한</th>
+                <th>가입일</th>
+                <th>관리</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="member : ${members}">
+                <td th:text="${member.id}">1</td>
+                <td th:text="${member.name}">홍길동</td>
+                <td th:text="${member.email}">test@test.com</td>
+                <td th:text="${member.role}">USER</td>
+                <td th:text="${#temporals.format(member.createdAt, 'yyyy-MM-dd HH:mm')}">2024-01-01 12:00</td>
+                <td>
+                    <a th:href="@{'/admin/members/' + ${member.id} + '/comments'}">댓글 보기</a>
+                    <form th:action="@{'/admin/members/' + ${member.id} + '/delete'}"
+                          method="post"
+                          onsubmit="return confirm('해당 회원을 삭제하시겠습니까?');">
+                        <button type="submit">삭제</button>
+                    </form>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(members)}">
+                <td colspan="6" class="empty-message">등록된 회원이 없습니다.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </main>
 
 <footer>
@@ -66,7 +75,6 @@
 </footer>
 
 <script>
-    // JavaScript로 년도 쉽게 업데이트하기
     document.getElementById('current-year').textContent = new Date().getFullYear();
 </script>
 </body>

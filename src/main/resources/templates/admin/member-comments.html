@@ -5,9 +5,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>댓글 관리 - 버디의 홈페이지</title>
+    <title>회원 댓글 관리 - 버디의 홈페이지</title>
 
+    <!-- ✅ 공통 레이아웃 + 관리자 전용 스타일 -->
     <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
 </head>
 <body>
 <div class="login-area">
@@ -25,42 +27,57 @@
     <ul>
         <li><a th:href="@{/home}">홈</a></li>
         <li><a th:href="@{/admin/members}">회원 관리</a></li>
-        <li><a th:href="@{/admin/comments}">댓글 관리</a></li>
     </ul>
 </nav>
 
-<main style="max-width: 900px; margin: 40px auto; background: rgba(255,255,255,0.9); padding: 20px; border-radius: 12px;">
-    <h2>댓글 목록</h2>
+<main>
+    <h2>
+        <span th:text="${member.name}">회원</span> 님의 댓글 목록
+    </h2>
 
-    <table style="width: 100%; border-collapse: collapse;">
-        <thead>
-        <tr>
-            <th style="border-bottom: 2px solid #ccc; padding: 8px;">ID</th>
-            <th style="border-bottom: 2px solid #ccc; padding: 8px;">페이지</th>
-            <th style="border-bottom: 2px solid #ccc; padding: 8px;">작성자</th>
-            <th style="border-bottom: 2px solid #ccc; padding: 8px;">내용</th>
-            <th style="border-bottom: 2px solid #ccc; padding: 8px;">작성일</th>
-            <th style="border-bottom: 2px solid #ccc; padding: 8px;">관리</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="comment : ${comments}">
-            <td th:text="${comment.id}" style="border-bottom: 1px solid #eee; padding: 8px;">1</td>
-            <td th:text="${comment.pageId}" style="border-bottom: 1px solid #eee; padding: 8px;">info</td>
-            <td th:text="${comment.author.name}" style="border-bottom: 1px solid #eee; padding: 8px;">홍길동</td>
-            <td th:text="${comment.content}" style="border-bottom: 1px solid #eee; padding: 8px;">내용</td>
-            <td th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"
-                style="border-bottom: 1px solid #eee; padding: 8px;">2024-01-01 12:00</td>
-            <td style="border-bottom: 1px solid #eee; padding: 8px;">
-                <form th:action="@{'/admin/comments/' + ${comment.id} + '/delete'}"
-                      method="post"
-                      onsubmit="return confirm('해당 댓글을 삭제하시겠습니까?');">
-                    <button type="submit">삭제</button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <!-- ✅ 회원 정보 표시 -->
+    <div class="admin-info">
+        <strong>이메일:</strong> <span th:text="${member.email}"></span> |
+        <strong>역할:</strong> <span th:text="${member.role}"></span>
+    </div>
+
+    <a th:href="@{/admin/members}" style="display: inline-block; margin-bottom: 20px; color: #007bff; text-decoration: none;">
+        ← 회원 목록으로 돌아가기
+    </a>
+
+    <!-- ✅ 테이블 래퍼 추가 -->
+    <div class="table-wrapper">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>작성일</th>
+                <th>페이지</th>
+                <th>내용</th>
+                <th>관리</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="comment : ${comments}">
+                <td th:text="${comment.id}">1</td>
+                <td th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}">2024-01-01 12:00</td>
+                <td th:text="${comment.pageId}">INFO</td>
+                <td th:text="${comment.content}">내용</td>
+                <td>
+                    <form th:action="@{'/comments/' + ${comment.id} + '/delete'}"
+                          method="post"
+                          onsubmit="return confirm('해당 댓글을 삭제하시겠습니까?');">
+                        <input type="hidden" name="pageId" value="ADMIN">
+                        <button type="submit">삭제</button>
+                    </form>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(comments)}">
+                <td colspan="5" class="empty-message">작성한 댓글이 없습니다.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </main>
 
 <footer>
@@ -68,7 +85,6 @@
 </footer>
 
 <script>
-    // JavaScript로 년도 쉽게 업데이트하기
     document.getElementById('current-year').textContent = new Date().getFullYear();
 </script>
 </body>

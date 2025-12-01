@@ -8,6 +8,7 @@
     <title>버디의 실내 동영상</title>
 
     <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/lightbox.css}">
     <link rel="stylesheet" th:href="@{/css/comments.css}">
 </head>
 <body>
@@ -38,10 +39,11 @@
     </ul>
 </nav>
 
-<main>
-    <h2>버디의 실내 동영상</h2>
+<!-- ✅ 기존 빨간 글씨 대신 page-title-card 사용 -->
+<div class="page-title-card">
+    <h2>🏠 버디의 실내 동영상</h2>
     <p>버디랑 찍은 사랑스러운 실내 동영상들을 마음껏 보세요.</p>
-</main>
+</div>
 
 <div id="mediacontainer">
     <video controls>
@@ -85,7 +87,12 @@
 </section>
 
 <footer>
-    <p>&copy; 2024 My Homepage. All rights reserved.</p>
+    <p id="footer-year">&copy; <span id="current-year"></span> My Homepage. All rights reserved.</p>
 </footer>
+
+<script>
+    // JavaScript로 년도 쉽게 업데이트하기
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>

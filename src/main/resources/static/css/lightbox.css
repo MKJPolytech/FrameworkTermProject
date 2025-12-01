@@ -17,7 +17,7 @@
 }
 
 /* ===================================
-   썸네일 이미지
+   인네일 이미지
    =================================== */
 
 #mediacontainer img {
@@ -49,6 +49,8 @@
     height: auto;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 0 auto;
+    display: block;
 }
 
 /* ===================================
@@ -83,6 +85,9 @@
     border-radius: 10px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     animation: fadeIn 0.3s ease;
+    cursor: default;
+    position: relative;
+    z-index: 1001;
 }
 
 /* ===================================
