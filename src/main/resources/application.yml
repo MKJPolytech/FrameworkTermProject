@@ -1,31 +1,22 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:buddydb;MODE=MySQL;DB_CLOSE_DELAY=-1
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: jdbc:mysql://localhost:3306/frameworkgimal?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: framework
+    password: framework1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
-      ddl-auto: update   # 개발 중에는 update, 완성 후에는 validate 권장
+      ddl-auto: update   # 개발 중 편하게 테이블 자동 생성
     show-sql: true
     properties:
       hibernate:
         format_sql: true
-
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+        # dialect는 최신부턴 자동 인식되지만, 명시해도 됨
+        # dialect: org.hibernate.dialect.MySQLDialect
 
   thymeleaf:
     cache: false
 
 server:
   port: 8080
-
-#  datasource:
-#    url: jdbc:mysql://localhost:3306/buddydb?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-#    username: buddy
-#    password: buddy1234
-#    driver-class-name: com.mysql.cj.jdbc.Driver

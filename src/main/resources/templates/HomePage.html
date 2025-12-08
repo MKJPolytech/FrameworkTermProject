@@ -27,7 +27,6 @@
         };
     </script>
 
-    <!-- ✅ 공통 레이아웃 / 카드 / 명언 박스 등 -->
     <link rel="stylesheet" th:href="@{/css/common.css}">
 </head>
 <body>
@@ -55,6 +54,14 @@
         <li><a th:href="@{/photos}">사진</a></li>
         <li><a th:href="@{/videos}">동영상</a></li>
         <li><a th:href="@{/info}">정보</a></li>
+        <!-- ✅ 로그인한 사용자에게만 마이페이지 표시 -->
+        <li sec:authorize="isAuthenticated()">
+            <a th:href="@{/mypage}">마이페이지</a>
+        </li>
+        <!-- ✅ 관리자에게만 회원 관리 표시 -->
+        <li sec:authorize="hasRole('ADMIN')">
+            <a th:href="@{/admin/members}">회원 관리</a>
+        </li>
     </ul>
 </nav>
 
@@ -75,13 +82,6 @@
     <h3>💭 오늘의 명언</h3>
     <p id="quote-text"></p>
 </div>
-
-<li sec:authorize="isAuthenticated()">
-    <a th:href="@{/mypage}">마이페이지</a>
-</li>
-<li sec:authorize="hasRole('ADMIN')">
-    <a th:href="@{/admin/members}">회원 관리</a>
-</li>
 
 <footer>
     <p id="footer-year">&copy; <span id="current-year"></span> My Homepage. All rights reserved.</p>
