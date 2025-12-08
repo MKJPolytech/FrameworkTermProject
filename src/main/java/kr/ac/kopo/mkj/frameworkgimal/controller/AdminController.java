@@ -20,19 +20,24 @@ public class AdminController {
     @GetMapping("/members")
     public String memberList(Model model) {
         model.addAttribute("members", memberService.getAllMembers());
-        return "admin/member-list";   // templates/admin/member-list.html
+        return "admin/member-list";
     }
 
     // ✅ 관리자: 특정 회원이 쓴 댓글 목록
     @GetMapping("/members/{id}/comments")
-    public String memberComments(@PathVariable Long id,
-                                 Model model) {
-
+    public String memberComments(@PathVariable Long id, Model model) {
         Member member = memberService.getById(id);
 
         model.addAttribute("member", member);
         model.addAttribute("comments", commentService.getCommentsByAuthor(member));
 
-        return "admin/member-comments";   // templates/admin/member-comments.html
+        return "admin/member-comments";
+    }
+
+    // ✅ 관리자: 회원 삭제 (추가)
+    @PostMapping("/members/{id}/delete")
+    public String deleteMember(@PathVariable Long id) {
+        memberService.deleteById(id);
+        return "redirect:/admin/members?deleted";
     }
 }

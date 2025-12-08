@@ -6,21 +6,20 @@ import kr.ac.kopo.mkj.frameworkgimal.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import jakarta.annotation.PostConstruct;
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-    // 앱 시작 시 admin 계정 자동 생성
     @PostConstruct
     public void initAdmin() {
         Optional<Member> existing = memberRepository.findByEmail("admin@buddy.com");
@@ -34,6 +33,7 @@ public class MemberService {
         }
     }
 
+    @Transactional
     public void register(String name, String email, String rawPassword) {
         if (memberRepository.findByEmail(email).isPresent()) {
             throw new IllegalArgumentException("이미 가입된 이메일입니다.");
@@ -48,29 +48,35 @@ public class MemberService {
         memberRepository.save(member);
     }
 
+    @Transactional
     public void deleteByEmail(String email) {
         memberRepository.findByEmail(email)
                 .ifPresent(memberRepository::delete);
     }
 
-    // ✅ 이메일로 회원 한 명 조회
+    // ✅ ID로 삭제 (관리자용)
+    @Transactional
+    public void deleteById(Long id) {
+        if (!memberRepository.existsById(id)) {
+            throw new IllegalArgumentException("회원을 찾을 수 없습니다. ID: " + id);
+        }
+        memberRepository.deleteById(id);
+    }
+
     public Member getByEmail(String email) {
         return memberRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다: " + email));
     }
 
-    // ✅ ID로 회원 한 명 조회 (admin용)
     public Member getById(Long id) {
         return memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다. id = " + id));
     }
 
-    // ✅ 전체 회원 목록 (admin용)
     public List<Member> getAllMembers() {
         return memberRepository.findAll();
     }
 
-    // ✅ 마이페이지에서 프로필/비밀번호 수정
     @Transactional
     public void updateProfile(String email, String name, String bio, String rawNewPassword) {
         Member member = getByEmail(email);
@@ -81,6 +87,5 @@ public class MemberService {
         if (rawNewPassword != null && !rawNewPassword.isBlank()) {
             member.setPassword(passwordEncoder.encode(rawNewPassword));
         }
-        // JPA dirty checking → save() 안 해도 update 반영
     }
 }
